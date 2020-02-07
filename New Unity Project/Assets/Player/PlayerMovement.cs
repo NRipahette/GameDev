@@ -12,12 +12,16 @@ public class PlayerMovement : MonoBehaviour
     private float AttackMovementSpeed = 0.2f;
     public float JumpForce = 100;
     public float speed = 0;
+    public float Walkspeed = 0;
     private bool isRotating = false;
     private bool IsGrounded = false;
-    Vector3 lastPosition = Vector3.zero;
+    private Vector3 lastPosition = Vector3.zero;
     private float distToGround;
-    CameraCollision my_camera;
-    Animator myAnimator;
+    private CameraCollision my_camera;
+    private Animator myAnimator;
+    private Rigidbody body;
+    private Vector3 _inputs = Vector3.zero;
+    private Vector3 desired_dir;
 
     // Start is called before the first frame update
     void Start()
@@ -25,34 +29,56 @@ public class PlayerMovement : MonoBehaviour
         my_camera = FindObjectOfType<CameraCollision>();
         myAnimator = GetComponentInChildren<Animator>();
         lastPosition = transform.position;
-        distToGround = GetComponentInChildren<BoxCollider>().bounds.extents.y;
+        //distToGround = GetComponentInChildren<BoxCollider>().bounds.extents.y;
+        body = GetComponent<Rigidbody>();
+        desired_dir = new Vector3(my_camera.gameObject.transform.forward.x, 0, my_camera.gameObject.transform.forward.z);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        desired_dir = new Vector3(my_camera.gameObject.transform.forward.x, 1, my_camera.gameObject.transform.forward.z);
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
-
+/*
         if (IsGrounded)
         {
             if (myAnimator.GetBool("IsJumping")) { myAnimator.SetBool("IsJumping", false); }
             else if (Should_jump()) { Jump(); };
             if (Should_ilde()) { Idle(); };
 
-        }
-        if (Should_walk_forward()){ walk_forward(); } else { myAnimator.SetBool("IsWalkingForward", false); };
-        if (Should_walk_left()) { Walk_left(); }else{ myAnimator.SetBool("IsWalkingLeft", false); };
-        if (Should_walk_backward()) { walk_backward(); } else { myAnimator.SetBool("IsWalkingBackward", false); };
-        if (Should_walk_right()) { Walk_right(); } else { myAnimator.SetBool("IsWalkingRight", false); };
+        }*/
+        //if (Should_walk_forward()){ walk_forward(); } else { myAnimator.SetBool("IsWalkingForward", false); };
+        //if (Should_walk_left()) { Walk_left(); }else{ myAnimator.SetBool("IsWalkingLeft", false); };
+        //if (Should_walk_backward()) { walk_backward(); } else { myAnimator.SetBool("IsWalkingBackward", false); };
+        //if (Should_walk_right()) { Walk_right(); } else { myAnimator.SetBool("IsWalkingRight", false); };
 
         if (Should_attack()) { Attack(); };
 
         //transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X"), 0) * Time.deltaTime * turning_speed);
+        if (Should_rotate()) { Rotate(); };
 
 
+        _inputs = Vector3.zero;
+        _inputs.x = Input.GetAxis("Horizontal");
+        _inputs.z = Input.GetAxis("Vertical");
+        if (_inputs != Vector3.zero)
+            transform.forward = _inputs;
+
+        if (Input.GetButtonDown("Jump") && IsGrounded)
+        {
+            body.AddForce(Vector3.up * Mathf.Sqrt(JumpForce * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+        }
+        //if (Input.GetButtonDown("Dash"))
+        //{
+        //    Vector3 dashVelocity = Vector3.Scale(transform.forward, DashDistance * new Vector3((Mathf.Log(1f / (Time.deltaTime * body.drag + 1)) / -Time.deltaTime), 0, (Mathf.Log(1f / (Time.deltaTime * body.drag + 1)) / -Time.deltaTime)));
+        //    body.AddForce(dashVelocity, ForceMode.VelocityChange);
+        //}
+
+        body.MovePosition(body.position + Vector3.Scale( _inputs , desired_dir) * Walkspeed * Time.fixedDeltaTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+
+    /*private void OnTriggerEnter(Collider other)
     {
 
         if (other.transform.tag == "Terrain")
@@ -97,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
             myAnimator.SetBool("IsAirborne", true);
         }
     }
-
+    */
 
     /*private bool IsGrounded() {
         
@@ -109,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (Should_rotate()) { Rotate(); };
+       
     }
 
     private void Rotate()
@@ -172,7 +198,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        GetComponent<Rigidbody>().AddForce(new Vector3(0, JumpForce, 0), ForceMode.Impulse);
+
+        //GetComponent<Rigidbody>().AddForce(new Vector3(0, JumpForce, 0), ForceMode.Impulse);
         myAnimator.SetBool("IsJumping",true);
     }
 
@@ -181,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
         return Input.GetKey(KeyCode.Space);
     }
 
-    private bool Should_walk_right()
+   /* private bool Should_walk_right()
     {
         return Input.GetKey(KeyCode.D);
     }
@@ -234,7 +261,7 @@ public class PlayerMovement : MonoBehaviour
     private bool Should_walk_forward()
     {
         return Input.GetKey(KeyCode.W);
-    }
+    }*/
 
 
     internal void RotatePlayer(float RotationY) {
