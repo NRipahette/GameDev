@@ -11,6 +11,7 @@ public class Idling : StateMachineBehaviour
         animator.SetBool("IsAttacking", false);
         animator.SetBool("IsMoving", false);
         animator.SetBool("IsWalkingForward", false);
+        animator.gameObject.GetComponent<PlayerMovement>().SetNormalMovementSpeed();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

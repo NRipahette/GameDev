@@ -20,14 +20,21 @@ public class WeaponScript : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("hit");
+        Debug.Log(collision.gameObject.name);
         //if (collision.transform.tag == "Enemy")
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            //collision.transform.GetComponent<EnemyController>().Damaged(Damage);
+            collision.transform.GetComponent<EnemyController>().Damaged(Damage);
+
+        }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Physics.IgnoreCollision(collision.collider, WeaponCollider);
+            collision.transform.GetComponent<EnemyController>().Damaged(Damage);
 
         }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
