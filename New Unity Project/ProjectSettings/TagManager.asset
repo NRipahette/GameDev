@@ -9,6 +9,7 @@ TagManager:
   - Character
   - Weapon
   - Enemy
+  - EnemyHit
   layers:
   - Default
   - TransparentFX

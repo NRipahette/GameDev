@@ -195,7 +195,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool Should_attack()
     {
-        return Input.GetKey(KeyCode.E);
+        return Input.GetKey(KeyCode.Mouse0);
     }
 
     private void Jump()

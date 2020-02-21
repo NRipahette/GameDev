@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -10,31 +11,54 @@ public class EnemyController : MonoBehaviour
     private float turning_speed = 0.1f;
     private float NormalMovementSpeed = 1;
     private float AttackMovementSpeed = 0.2f;
+    private Animator myAnim;
+    public GameObject Target;
+    private NavMeshAgent navMesh;
     internal bool IsAlive = true;
     // Start is called before the first frame update
     void Start()
     {
-        IsAlive = true;
+        myAnim = GetComponent<Animator>();
+        myAnim.SetBool("IsAlive", true);
+        navMesh = GetComponent<NavMeshAgent>();
+        CheckTargets();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(CurrentHealthPoints <= 0)
+        CheckIsAlive();
+        if (CurrentHealthPoints <= 0)
         { IsAlive = false; }
-
-        if (!IsAlive)
-        {
-            Destroy(gameObject);
+        if (!myAnim.GetBool("IsHit"))
+            MoveToTarget();
+        else {
+            Stop();
         }
+        //if (!IsAlive )
+        //{
+        //    Destroy(gameObject);
+        //}
+
     }
 
     public void Damaged(float damage)
     {
         CurrentHealthPoints -= damage;
     }
+    private void Stop() {
+        navMesh.isStopped=true;
+    }
 
+    public void CheckTargets() {
+       Target =  GameObject.FindGameObjectWithTag("Player"); ;
+    }
 
+    public void MoveToTarget() {
+        gameObject.GetComponent<NavMeshAgent>().destination = Target.transform.position;
+        if (Vector3.Distance(transform.position , Target.transform.position) <= 5)
+            navMesh.isStopped = false;
+    }
     bool CheckIsAlive()
     {
         GetComponent<Animator>().SetBool("IsAlive", IsAlive);

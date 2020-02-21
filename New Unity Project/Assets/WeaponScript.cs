@@ -6,10 +6,11 @@ public class WeaponScript : MonoBehaviour
 {
     public float Damage = 7;
     private CapsuleCollider WeaponCollider;
+    private Animator myAnim;
     // Start is called before the first frame update
     void Start()
     {
-
+        myAnim = GetComponentInParent<Animator>();
     }
 
     // Update is called once per frame
@@ -18,27 +19,26 @@ public class WeaponScript : MonoBehaviour
 
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collision)
     {
         Debug.Log(collision.gameObject.name);
         //if (collision.transform.tag == "Enemy")
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (myAnim.GetBool("IsAttacking") == true)
         {
-            collision.transform.GetComponent<EnemyController>().Damaged(Damage);
+            if (collision.gameObject.CompareTag("Enemy") && !collision.GetComponent<Animator>().GetBool("IsHit"))
+            {
+                collision.transform.GetComponent<EnemyController>().Damaged(Damage);
+                collision.GetComponent<Animator>().SetBool("IsHit", true);
 
-        }
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Physics.IgnoreCollision(collision.collider, WeaponCollider);
-            collision.transform.GetComponent<EnemyController>().Damaged(Damage);
+            }
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                Physics.IgnoreCollision(collision, WeaponCollider);
+                collision.transform.GetComponent<EnemyController>().Damaged(Damage);
 
+            }
         }
     }
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("hitTrigger");
-    }
 
 }
