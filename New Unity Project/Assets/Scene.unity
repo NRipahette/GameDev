@@ -142,6 +142,31 @@ MonoBehaviour:
   JumpForce: 100
   speed: 0
   Walkspeed: 0
+--- !u!114 &12394150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12394147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375c13eef26287846aa4f123d3a3bee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 7
+--- !u!114 &12394156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12394147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8d9f36b9dbf0e14e8bbd535053b96fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &322399876
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,16 +1287,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1927306257, guid: 00602b2d809c9b1468596e3f23ad3723, type: 3}
-      propertyPath: m_Speed
-      value: 2
+    - target: {fileID: 2896339814431112401, guid: 00602b2d809c9b1468596e3f23ad3723,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1927306257, guid: 00602b2d809c9b1468596e3f23ad3723, type: 3}
-      propertyPath: m_AutoBraking
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1927306257, guid: 00602b2d809c9b1468596e3f23ad3723, type: 3}
-      propertyPath: m_StoppingDistance
+    - target: {fileID: 5064535948303033314, guid: 00602b2d809c9b1468596e3f23ad3723,
+        type: 3}
+      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5064535949305016768, guid: 00602b2d809c9b1468596e3f23ad3723,
@@ -1334,7 +1357,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2896339814431112401, guid: 00602b2d809c9b1468596e3f23ad3723, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 00602b2d809c9b1468596e3f23ad3723, type: 3}
 --- !u!1001 &5334872407620823593
 PrefabInstance:
@@ -1370,10 +1394,20 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5334872406621267624, guid: 50be2cabc4e70e642b065f453498788b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334872406621267627, guid: 50be2cabc4e70e642b065f453498788b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5334872407632557194, guid: 50be2cabc4e70e642b065f453498788b,
         type: 3}
       propertyPath: m_Name
-      value: paladin_prop_j_nordstrom
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5334872407632557199, guid: 50be2cabc4e70e642b065f453498788b,
         type: 3}

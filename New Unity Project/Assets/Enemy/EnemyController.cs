@@ -28,12 +28,24 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         CheckIsAlive();
-        if (CurrentHealthPoints <= 0)
-        { IsAlive = false; }
-        if (!myAnim.GetBool("IsHit"))
-            MoveToTarget();
-        else {
-            Stop();
+        if (IsAlive)
+        {
+            if (CurrentHealthPoints <= 0)
+            {
+                IsAlive = false;
+                navMesh.isStopped = true;
+            }
+            if (!myAnim.GetBool("IsHit"))
+                MoveToTarget();
+            else
+            {
+                
+            }
+        }
+        else
+        {
+            navMesh.isStopped = true;
+
         }
         //if (!IsAlive )
         //{
@@ -56,8 +68,12 @@ public class EnemyController : MonoBehaviour
 
     public void MoveToTarget() {
         gameObject.GetComponent<NavMeshAgent>().destination = Target.transform.position;
-        if (Vector3.Distance(transform.position , Target.transform.position) <= 5)
+        if (Vector3.Distance(transform.position , Target.transform.position) <= 5 && IsAlive)
             navMesh.isStopped = false;
+        else
+        {
+            navMesh.isStopped = true;
+        }
     }
     bool CheckIsAlive()
     {

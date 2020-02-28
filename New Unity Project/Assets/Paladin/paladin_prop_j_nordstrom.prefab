@@ -370,6 +370,7 @@ GameObject:
   - component: {fileID: 1859569891334257476}
   - component: {fileID: 4442055348148742274}
   - component: {fileID: 1884688634248506972}
+  - component: {fileID: 2625672368743348635}
   m_Layer: 0
   m_Name: paladin_prop_j_nordstrom
   m_TagString: Player
@@ -457,3 +458,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TotalHealthPoints: 10
   CurrentHealthPoints: 10
+--- !u!135 &2625672368743348635
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5334872407632557194}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.84
+  m_Center: {x: 0, y: 1.09, z: 0.79}
